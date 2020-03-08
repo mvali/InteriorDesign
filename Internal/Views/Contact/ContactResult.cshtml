@@ -1,0 +1,28 @@
+﻿@model Internal.Contact
+<!-- contact -->
+<div class="contact" id="contact">
+    <div class="container">
+        <h3>Contact Us</h3>
+        <div class="contact_form" id="contactdiv">
+                <div class="wrap">
+                    <div class="contact-right">
+                        @if (Utils.TempData("Status", TempData) == "emailSent")
+                        {
+                            <div class="get-intouch-left-address"><p class="style1">@Resources.Contact.ContactAjax.EmailSent</p><br /></div>
+                        }
+
+                        @{
+                            var optionsGet = new AjaxOptions()
+                            {
+                                HttpMethod = "Get",
+                                InsertionMode = InsertionMode.ReplaceWith,
+                                UpdateTargetId = "contactdiv"
+                            };
+                        }
+                        @Ajax.ActionLink(Resources.Contact.ContactAjax.Reload, "ContactAjax", "", optionsGet, new { @class = "button1" })
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+</div>
+</div>

@@ -1,0 +1,37 @@
+﻿@model Internal.Contact
+<!-- contact -->
+<div class="contact_form" id="contactdiv">
+    @if (TempData["Status"] != null)
+    {
+        <div class="alert-info alert" style="display:none;">@TempData["Status"]</div>
+    }
+    @Html.ValidationSummary(false, Resources.Error.summary, new { @class = "validate" })
+
+    @{
+        var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+        var options = new AjaxOptions()
+        {
+            HttpMethod = "Post",
+            InsertionMode = InsertionMode.ReplaceWith,
+            UpdateTargetId = "contactdiv"
+        };
+    }
+    @using (Ajax.BeginForm("ContactAjax", "Contact", new { language = culture }, options))
+    {
+        @Html.AntiForgeryToken()
+        @Html.TextBoxFor(x => x.Name, new { @placeholder = @Resources.Contact.ContactAjax.Name, @class = "margin-right" })
+        @Html.ValidationMessageFor(x => x.Name, null, new { @class = "validate" })
+
+        @Html.TextBoxFor(x => x.Email, new { @placeholder = @Resources.Contact.ContactAjax.Email, @class = "margin-right" })
+        @Html.ValidationMessageFor(x => x.Email, null, new { @class = "validate" })
+
+        @Html.TextBoxFor(x => x.Phone, new { @placeholder = @Resources.Contact.ContactAjax.Phone, @class = "margin-right" })
+        @Html.ValidationMessageFor(x => x.Phone, null, new { @class = "validate" })
+
+        @Html.TextAreaFor(x => x.Message, new { @placeholder = @Resources.Contact.ContactAjax.Message, @rows = "8" })
+        @Html.ValidationMessageFor(x => x.Message, null, new { @class = "validate" })
+        <div class="submit-btn">
+            <input type="submit" class="more_btn" value="@Resources.Contact.ContactAjax.BtnSubmit" />
+        </div>
+    }
+</div>
